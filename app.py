@@ -1,5 +1,6 @@
 import streamlit as st
 from langchain.llms import LlamaCpp
+import huggingface_hub
 from langchain.embeddings import LlamaCppEmbeddings
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
@@ -32,8 +33,13 @@ Question: {question}
 Answer:"""
 prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
 
-llm = LlamaCpp(model_path="DocQA\models\llama-7b.ggmlv3.q4_0.bin")
-embeddings = LlamaCppEmbeddings(model_path = "DocQA\models\llama-7b.ggmlv3.q4_0.bin")
+model_id = "TheBloke/LLaMa-7B-GGML"
+model_basename = "llama-7b.ggmlv3.q4_0.bin"
+
+model_path = huggingface_hub.hf_hub_download(repo_id=model_id, filename=model_basename)
+
+llm = LlamaCpp(model_path=model_path)
+embeddings = LlamaCppEmbeddings(model_path = "TheBloke/LLaMa-7B-GGML")
 llm_chain = LLMChain(llm = llm, prompt = prompt)
 
 st.title("Document Conversation")
