@@ -37,9 +37,9 @@ model_id = "TheBloke/LLaMa-7B-GGML"
 model_basename = "llama-7b.ggmlv3.q4_0.bin"
 
 model_path = huggingface_hub.hf_hub_download(repo_id=model_id, filename=model_basename)
-
+print("Model Downloaded!!")
 llm = LlamaCpp(model_path=model_path)
-embeddings = LlamaCppEmbeddings(model_path = "TheBloke/LLaMa-7B-GGML")
+embeddings = LlamaCppEmbeddings(model_path = model_path)
 llm_chain = LLMChain(llm = llm, prompt = prompt)
 
 st.title("Document Conversation")
@@ -48,7 +48,7 @@ uploaded_file = st.file_uploader("Upload the text", type='txt')
 if uploaded_file is not None:
     content = uploaded_file.read().decode('utf-8')
     # st.write(content)
-    file_path = "DocQA/temp/file.txt"
+    file_path = "temp/file.txt"
     write_text_file(content, file_path)   
     
     loader = TextLoader(file_path)
