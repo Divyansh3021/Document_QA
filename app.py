@@ -39,7 +39,7 @@ model_basename = "llama-7b.ggmlv3.q4_0.bin"
 model_path = huggingface_hub.hf_hub_download(repo_id=model_id, filename=model_basename)
 
 llm = LlamaCpp(model_path=model_path)
-embeddings = LlamaCppEmbeddings(model_path = "TheBloke/LLaMa-7B-GGML")
+embeddings = LlamaCppEmbeddings(model_path = model_path)
 llm_chain = LLMChain(llm = llm, prompt = prompt)
 
 st.title("Document Conversation")
