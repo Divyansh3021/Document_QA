@@ -37,7 +37,9 @@ model_id = "TheBloke/LLaMa-7B-GGML"
 model_basename = "llama-7b.ggmlv3.q4_0.bin"
 
 model_path = huggingface_hub.hf_hub_download(repo_id=model_id, filename=model_basename)
+print("Model path: ", model_path)
 print("Model Downloaded!!")
+
 llm = LlamaCpp(model_path=model_path)
 embeddings = LlamaCppEmbeddings(model_path = model_path)
 llm_chain = LLMChain(llm = llm, prompt = prompt)
